@@ -21,7 +21,7 @@ lsp.configure("lua_ls", {
 })
 
 lsp.set_preferences({
-	suggest_lsp_servers = false,
+	suggest_lsp_servers = true,
 	sign_icons = {
 		error = "E",
 		warn = "W",

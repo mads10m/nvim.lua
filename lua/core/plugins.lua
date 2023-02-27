@@ -73,11 +73,15 @@ return require("packer").startup(function(use)
 		requires = "nvim-tree/nvim-web-devicons",
 		config = function()
 			require("trouble").setup {
-				auto_open = false,
-				-- your configuration comes here
-				-- or leave it empty to use the default settings
-				-- refer to the configuration section below
+				auto_open = true,	-- automatically open the list when you have diagnostics
+				auto_close = true,	-- automatically close the list when you have no diagnostics
 			}
+		end
+	}
+	use {
+		"j-hui/fidget.nvim",
+		config = function()
+			require("fidget").setup()
 		end
 	}
 
@@ -89,6 +93,20 @@ return require("packer").startup(function(use)
 		end
 
 	}
+	use {
+		"nvim-lualine/lualine.nvim",
+		requires = { "nvim-tree/nvim-web-devicons", opt = true },
+		config = function()
+			require('lualine').setup {
+				options = {
+					icons_enabled = true,
+					theme = 'onedark',
+					component_separators = '|',
+					section_separators = '',
+				},
+			}
+		end
+	}
 
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins
@@ -96,3 +114,4 @@ return require("packer").startup(function(use)
 		require("packer").sync()
 	end
 end)
+
