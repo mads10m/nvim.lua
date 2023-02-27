@@ -11,6 +11,12 @@ end
 
 local packer_bootstrap = ensure_packer()
 
+require("packer").init({
+	display = {
+		open_cmd = "leftabove 65vnew \\[packer\\]", -- Open to the left even with "splitright = true"
+	}
+})
+
 return require("packer").startup(function(use)
 	use "wbthomason/packer.nvim"
 
