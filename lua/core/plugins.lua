@@ -35,6 +35,10 @@ return require("packer").startup(function(use)
 		},
 	}
 
+	-- git
+	use "tpope/vim-fugitive"
+	use "airblade/vim-gitgutter"
+
 	-- lsp
 	use {
 		"VonHeikemen/lsp-zero.nvim",
@@ -57,6 +61,18 @@ return require("packer").startup(function(use)
 			{"L3MON4D3/LuaSnip"},             -- Required
 			{"rafamadriz/friendly-snippets"}, -- Optional
 		}
+	}
+	use {
+		"folke/trouble.nvim",
+		requires = "nvim-tree/nvim-web-devicons",
+		config = function()
+			require("trouble").setup {
+				auto_open = false,
+				-- your configuration comes here
+				-- or leave it empty to use the default settings
+				-- refer to the configuration section below
+			}
+		end
 	}
 
 	-- theme
