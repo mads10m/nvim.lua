@@ -41,6 +41,8 @@ return require("packer").startup(function(use)
 		},
 	}
 
+	use "christoomey/vim-tmux-navigator"
+
 	-- git
 	use "tpope/vim-fugitive"
 	use "airblade/vim-gitgutter"
@@ -73,7 +75,7 @@ return require("packer").startup(function(use)
 		requires = "nvim-tree/nvim-web-devicons",
 		config = function()
 			require("trouble").setup {
-				auto_open = true,	-- automatically open the list when you have diagnostics
+				--auto_open = true,	-- automatically open the list when you have diagnostics
 				auto_close = true,	-- automatically close the list when you have no diagnostics
 			}
 		end
