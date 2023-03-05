@@ -47,6 +47,9 @@ return require("packer").startup(function(use)
 	use "tpope/vim-fugitive"
 	use "airblade/vim-gitgutter"
 
+	-- automatically adjusts 'shiftwidth' and 'expandtab' heuristically based on the current file
+	use "tpope/vim-sleuth"
+
 	-- lsp
 	use {
 		"VonHeikemen/lsp-zero.nvim",

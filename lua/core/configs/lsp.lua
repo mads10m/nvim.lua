@@ -1,8 +1,8 @@
 local lsp = require("lsp-zero").preset({
-  name = 'minimal',
-  set_lsp_keymaps = true,
-  manage_nvim_cmp = true,
-  suggest_lsp_servers = false,
+	name = 'minimal',
+	set_lsp_keymaps = true,
+	manage_nvim_cmp = true,
+	suggest_lsp_servers = false,
 })
 
 lsp.ensure_installed({
@@ -17,13 +17,13 @@ lsp.nvim_workspace()
 
 -- Fix Undefined global "vim"
 lsp.configure("lua_ls", {
-    settings = {
-        Lua = {
-            diagnostics = {
-                globals = { "vim" }
-            }
-        }
-    }
+	settings = {
+		Lua = {
+			diagnostics = {
+				globals = { "vim" }
+			}
+		}
+	}
 })
 
 lsp.set_preferences({
@@ -37,7 +37,7 @@ lsp.set_preferences({
 })
 
 lsp.on_attach(function(client, bufnr)
-	local opts = {buffer = bufnr, remap = false}
+	local opts = { buffer = bufnr, remap = false }
 	vim.keymap.set("n", "<leader>tt", function() vim.lsp.buf.code_action() end, opts)
 	vim.keymap.set("n", "<leader>gg", function() vim.lsp.buf.format() end, opts)
 
@@ -53,6 +53,37 @@ lsp.on_attach(function(client, bufnr)
 	vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
 end)
 
+-- Format on save
+--vim.cmd([[
+--	autocmd BufWritePre *.tsx lua vim.lsp.buf.format({async = false})
+--]])
+
+local group = vim.api.nvim_create_augroup("FormatOnSave", { clear = true })
+vim.api.nvim_create_autocmd("BufWritePre", {
+	group = group,
+	pattern = {
+		"*.js",
+		"*.ts",
+		"*.html",
+		"*.css", -- TODO: add css supersets
+		"*.json",
+		-- react
+		"*.jsx",
+		"*.tsx",
+		-- prisma
+		"*.prisma",
+		-- rust
+		"*.rs",
+		"*.toml"
+	},
+	callback = function ()
+		vim.lsp.buf.format({async = false})
+	end
+
+})
+
+
+
 -- vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
 -- vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
 -- vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
@@ -61,18 +92,18 @@ end)
 -- vim.keymap.set("n", "<space>wa", vim.lsp.buf.add_workspace_folder, bufopts)
 -- vim.keymap.set("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, bufopts)
 -- vim.keymap.set("n", "<space>wl", function()
-	--     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-	-- end, bufopts)
-	-- vim.keymap.set("n", "<space>D", vim.lsp.buf.type_definition, bufopts)
-	-- vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, bufopts)
-	-- vim.keymap.set("n", "<space>ca", vim.lsp.buf.code_action, bufopts)
-	-- vim.keymap.set("n", "gr", vim.lsp.buf.references, bufopts)
-	-- vim.keymap.set("n", "<space>f", function() vim.lsp.buf.format { async = true } end, bufopts)
+--     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+-- end, bufopts)
+-- vim.keymap.set("n", "<space>D", vim.lsp.buf.type_definition, bufopts)
+-- vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, bufopts)
+-- vim.keymap.set("n", "<space>ca", vim.lsp.buf.code_action, bufopts)
+-- vim.keymap.set("n", "gr", vim.lsp.buf.references, bufopts)
+-- vim.keymap.set("n", "<space>f", function() vim.lsp.buf.format { async = true } end, bufopts)
 
-	-- append text after the warning or error
+-- append text after the warning or error
 
-	lsp.setup()
+lsp.setup()
 
-	vim.diagnostic.config({
-		virtual_text = true
-	})
+vim.diagnostic.config({
+virtual_text = true
+})
