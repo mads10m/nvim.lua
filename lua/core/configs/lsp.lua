@@ -1,6 +1,9 @@
-local lsp = require("lsp-zero")
-
-lsp.preset("recommended")
+local lsp = require("lsp-zero").preset({
+  name = 'minimal',
+  set_lsp_keymaps = true,
+  manage_nvim_cmp = true,
+  suggest_lsp_servers = false,
+})
 
 lsp.ensure_installed({
 	"eslint",
@@ -8,6 +11,9 @@ lsp.ensure_installed({
 	"lua_ls",
 	"rust_analyzer",
 })
+
+-- (Optional) Configure lua language server for neovim
+lsp.nvim_workspace()
 
 -- Fix Undefined global "vim"
 lsp.configure("lua_ls", {
